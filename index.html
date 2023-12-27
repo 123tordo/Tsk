@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Funny Tasks</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: black; /* Black background color */
+            color: #ecf0f1; /* Light grey text color */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        #task-container {
+            padding: 20px;
+            border: 2px solid #e74c3c; /* Red border color */
+            border-radius: 10px; /* Rounded corners */
+            background-color: #2c3e50; /* Dark grey background color */
+        }
+
+        #countdown {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const taskContainer = document.getElementById("task-container");
+        const countdownElement = document.getElementById("countdown");
+
+        const allTasks = [
+            { task: "Dança nova: Inventar um novo movimento de dança rápido ou dançar durante alguns segundos.", time: 15 },
+            { task: "Dá a Ti Próprio um Aperto de Mãos: Dá a ti próprio um aperto de mãos entusiástico.", time: 10 },
+            { task: "Conta um sonho engraçado: Conta um sonho engraçado.", time: 15 },
+            { task: "Imita o Teu Celebridade Favorita: Faz uma breve imitação da tua celebridade favorita.", time: 20 },
+            { task: "Faz uma Cara Engraçada de olhos fechados: Faz a cara mais engraçada possível com os olhos fechados.", time: 15 },
+            { task: "Fala com um Sotaque Engraçado: Diz uma ou duas frases com um sotaque engraçado.", time: 15 },
+            { task: "Faz um Pequeno Espetáculo de Marionetas com as Tuas Mãos: Usa as tuas mãos para criar um pequeno espetáculo de marionetas.", time: 20 },
+            { task: "Conta uma Anedota: Conta uma rápida anedota.", time: 15 },
+            { task: "Tira uma Selfie Engraçada: Tira uma selfie rápida e engraçada com uma expressão divertida e partilha com 5 contactos.", time: 10 },
+            { task: "Faz o Andar de Pinguim: Anda como um pinguim por uma curta distância.", time: 20 },
+            { task: "Canta uma Música Ridícula: Canta uma breve parte de uma música engraçada.", time: 15 },
+            { task: "Faz Uma Careta e Mantém por 10 Segundos: Faz a careta mais engraçada que conseguires e mantém por 10 segundos.", time: 10 },
+            { task: "Conta uma História Absurda de 3 Frases: Inventa uma história completamente absurda em apenas 3 frases.", time: 20 },
+            { task: "Agarra numa pessoa da sala e faz uma Dança Desajeitada: Inventa uma dança desajeitada e dança com alguém da sala no local por alguns segundos.", time: 15 },
+            { task: "Diz 'Piquenique de Pinguins' 5 Vezes Rápido: Diz a frase 'Piquenique de pinguins' cinco vezes rapidamente.", time: 10 },
+            { task: "Imita um Animal Bizarro: Inventa um som e comportamento de um animal imaginário e faz por 15 segundos.", time: 15 },
+            { task: "Troca de Lugar com um Objeto na Sala: Troca de lugar com um objeto na sala por 10 segundos (seja criativo!).", time: 10 },
+            { task: "Faz um Desenho Rápido e Tolo: Desenha algo tolo em um papel em 15 segundos.", time: 15 },
+            { task: "Finge Estar numa Pista de Dança Invisível: Finge que estás numa pista de dança invisível por 20 segundos.", time: 20 },
+            { task: "Inventa uma Saudação Maluca e Cumprimenta Alguém: Inventa uma saudação maluca e cumprimenta alguém com ela.", time: 15 },
+            { task: "Faz Uma Dança Aleatória e Desajeitada: Improvisa uma dança aleatória e desajeitada por alguns segundos.", time: 15 },
+            { task: "Cria uma Piada Instantânea: Invente uma piada rápida e compartilhe com alguém ao seu redor.", time: 15 },
+            { task: "Imita um Personagem de Desenho Animado: Imita a voz e os gestos de um personagem de desenho animado por 20 segundos.", time: 20 },
+            { task: "Faz uma Careta de Surpresa: Faz uma careta de surpresa e mantém por 10 segundos.", time: 10 },
+            { task: "Inventa uma Cumprimento Secreta: Cria um cumprimento secreto e realiza com alguém próximo.", time: 15 },
+            { task: "Cria um Nome Engraçado para Ti Próprio por 10 Segundos: Invente um nome engraçado para ti próprio e use por 10 segundos.", time: 10 },
+            { task: "Faz um Som de Animal Improvisado: Invente um som de animal e reproduza por 15 segundos.", time: 15 },
+            { task: "Faz uma Expressão Facial Exagerada: Faça uma expressão facial exagerada (feliz, triste, surpreso) por 15 segundos.", time: 15 },
+            { task: "Diz 'Palavra-passe Abacaxi' a Alguém: Aborda alguém e diz 'Palavra-passe Abacaxi' de forma misteriosa.", time: 10 },
+            { task: "Finge que Estás numa Entrevista de Emprego Louca: Finge que estás numa entrevista de emprego maluca por 20 segundos.", time: 20 },
+            { task: "Inventa uma Palavra Maluca e Dá-lhe um Significado: Inventa uma palavra completamente maluca e explique o que significa.", time: 15 },
+            { task: "Diz 'Três Táxis Tigres' Rapidamente 5 Vezes: Diz a frase 'Três táxis tigres' rapidamente cinco vezes seguidas.", time: 15 },
+            { task: "Conta uma História Absurda de 10 Segundos: Cria uma história completamente absurda em apenas 10 segundos.", time: 10 },
+            { task: "Fala com um Sotaque Engraçado Durante 15 Segundos: Mantém uma conversa rápida com um sotaque engraçado.", time: 15 },
+            { task: "Diz uma Frase ao Contrário: Escolhe uma frase e diz ao contrário (pode ser algo simples).", time: 15 },
+            { task: "Declama Uma Rima Ridícula: Cria e recita uma rima tola rapidamente.", time: 20 },
+            { task: "Faz uma Entrevista Fictícia a ti Próprio: Simula uma entrevista fictícia contigo próprio por 20 segundos.", time: 20 },
+            { task: "Conta uma piada sem graça: Conta uma piada sem graça e ri-te com ela.", time: 15 },
+            { task: "Cria um Anúncio Absurdo para um Produto Imaginário: Invente um anúncio engraçado para um produto que não existe.", time: 20 }
+        ];
+
+        function displayRandomTask() {
+            const randomIndex = Math.floor(Math.random() * allTasks.length);
+            const currentTask = allTasks[randomIndex];
+
+            taskContainer.innerHTML = `<p>${currentTask.task}</p>`;
+            taskContainer.appendChild(countdownElement);
+
+            // Show the countdown
+            let secondsLeft = currentTask.time;
+            countdownElement.textContent = `Tempo restante: ${secondsLeft}s`;
+
+            const countdownInterval = setInterval(() => {
+                secondsLeft--;
+
+                if (secondsLeft >= 0) {
+                    countdownElement.textContent = `Tempo restante: ${secondsLeft}s`;
+                } else {
+                    clearInterval(countdownInterval);
+
+                    // Show "Lança o dado outra e lê o código para um novo desafio" for 5 seconds
+                    taskContainer.innerHTML = "<p>Lança o dado outra e lê o código para um novo desafio.</p>";
+                    setTimeout(() => {
+                        // Reset the task container after 5 seconds
+                        taskContainer.innerHTML = "";
+                    }, 5000);
+                }
+            }, 1000);
+        }
+
+        displayRandomTask(); // Initial call to start the fun
+    });
+</script>
+
+</body>
+</html>
+
