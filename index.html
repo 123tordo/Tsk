@@ -86,7 +86,7 @@
 
         function displayRandomTask() {
             const currentTask = allTasks[Math.floor(Math.random() * allTasks.length)];
-            taskContainer.innerHTML = `<p>Prepara-te, tens ${currentTask.time} segundos para a realizar. O tempo começa agora.</p>`;
+            taskContainer.innerHTML = `<p>Prepara-te, tens ${currentTask.time} segundos para realizar o próximo desafio. O tempo começa agora.</p>`;
 
             setTimeout(() => {
                 taskContainer.innerHTML = `<p>${currentTask.task}</p>`;
@@ -104,7 +104,7 @@
                         clearInterval(countdownInterval);
 
                         setTimeout(() => {
-                            taskContainer.innerHTML = "Lança o dado outra vez para outro desafio";
+                            taskContainer.innerHTML = "O teu tempo terminou, lança o dado outra vez para outro desafio";
                         }, 5000);
                     }
                 }, 1000);
