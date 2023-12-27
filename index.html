@@ -82,24 +82,12 @@
             { task: "Simula uma entrevista fictícia contigo próprio por 20 segundos.", time: 20 },
             { task: "Conta uma piada sem graça e ri-te enquanto a contas.", time: 15 },
             { task: "Inventa um anúncio engraçado para um produto que não existe.", time: 20 }
-       ];
+    ];
 
         function displayRandomTask() {
-            // Retrieve the tasks already shown from local storage
-            const shownTasks = JSON.parse(localStorage.getItem("shownTasks")) || [];
-            let remainingTasks = allTasks.filter(task => !shownTasks.includes(task.task));
-
-            if (remainingTasks.length === 0) {
-                // If all tasks have been shown, reset the shown tasks
-                remainingTasks = [...allTasks];
-                localStorage.setItem("shownTasks", JSON.stringify([]));
-            }
+            let remainingTasks = [...allTasks];
 
             const currentTask = remainingTasks[Math.floor(Math.random() * remainingTasks.length)];
-
-            // Update the list of shown tasks in local storage
-            shownTasks.push(currentTask.task);
-            localStorage.setItem("shownTasks", JSON.stringify(shownTasks));
 
             taskContainer.innerHTML = `<p>${currentTask.task}</p>`;
             taskContainer.appendChild(countdownElement);
@@ -124,7 +112,6 @@
             }, 1000);
         }
 
- 
         // Initial call to start the fun
         displayRandomTask();
     });
