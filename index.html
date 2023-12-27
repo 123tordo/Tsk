@@ -29,7 +29,7 @@
         #countdown {
             margin-top: 10px;
             font-size: 36px; /* Bigger font size */
-            color: white; /* white text color */
+            color: yellow; /* Yellow text color */
         }
     </style>
 </head>
@@ -85,8 +85,21 @@
        ];
 
         function displayRandomTask() {
-            const randomIndex = Math.floor(Math.random() * allTasks.length);
-            const currentTask = allTasks[randomIndex];
+            // Retrieve the tasks already shown from local storage
+            const shownTasks = JSON.parse(localStorage.getItem("shownTasks")) || [];
+            let remainingTasks = allTasks.filter(task => !shownTasks.includes(task.task));
+
+            if (remainingTasks.length === 0) {
+                // If all tasks have been shown, reset the shown tasks
+                remainingTasks = [...allTasks];
+                localStorage.setItem("shownTasks", JSON.stringify([]));
+            }
+
+            const currentTask = remainingTasks[Math.floor(Math.random() * remainingTasks.length)];
+
+            // Update the list of shown tasks in local storage
+            shownTasks.push(currentTask.task);
+            localStorage.setItem("shownTasks", JSON.stringify(shownTasks));
 
             taskContainer.innerHTML = `<p>${currentTask.task}</p>`;
             taskContainer.appendChild(countdownElement);
@@ -102,12 +115,20 @@
                     countdownElement.innerHTML = `Tempo restante: ${secondsLeft}s`;
                 } else {
                     clearInterval(countdownInterval);
-                    taskContainer.innerHTML = "<p>Lança o dado outra vez e lê o código para um novo desafio.</p>";
+
+                    setTimeout(() => {
+                        // Clear the task container after 5 seconds
+                        taskContainer.innerHTML = "";
+                    }, 5000);
                 }
             }, 1000);
         }
 
-        displayRandomTask(); // Initial call to start the fun
+        // Display a new task every 60 seconds
+        setInterval(displayRandomTask, 60000);
+        
+        // Initial call to start the fun
+        displayRandomTask();
     });
 </script>
 
