@@ -34,10 +34,13 @@
 </head>
 <body>
 
+<div id="task-container"></div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const taskContainer = document.getElementById("task-container");
-        const countdownElement = document.getElementById("countdown");
+        const countdownElement = document.createElement("div");
+        countdownElement.id = "countdown";
 
         const allTasks = [
             { task: "Dança nova: Inventar um novo movimento de dança rápido ou dançar durante alguns segundos.", time: 15 },
@@ -105,6 +108,7 @@
                     setTimeout(() => {
                         // Reset the task container after 5 seconds
                         taskContainer.innerHTML = "";
+                        displayRandomTask(); // Show a new task after 5 seconds
                     }, 5000);
                 }
             }, 1000);
@@ -116,4 +120,3 @@
 
 </body>
 </html>
-
